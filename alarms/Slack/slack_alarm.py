@@ -85,7 +85,14 @@ class Slack_Alarm(Alarm):
 		icon_url = 'https://raw.githubusercontent.com/kvangent/PokeAlarm/master/icons/{}.png'.format(pkinfo['id'])
 		map = self.get_map_url(pkinfo['lat'], pkinfo['lng'])
 		self.post_message(channel, username, text, icon_url, map)
-			
+
+                #post to zones if those channels are available
+                zone = pkinfo['zone'].lower().replace(" ", "")
+                log.debug("Zone: %s" % zone)
+                if not zone:
+			if zone in self.channels:
+                                self.post_message(zone, username, text, icon_url, map)
+
 	#Set stack map attributes
 	def setup_map(self, settings):
 		if parse_boolean(settings.get('enabled', "True")) is False:

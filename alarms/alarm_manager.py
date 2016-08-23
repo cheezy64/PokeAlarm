@@ -9,6 +9,9 @@ import time
 from datetime import datetime
 from threading import Thread
 
+from pprint import pprint
+from sympy.geometry import Point, Polygon
+
 #Local imports
 from . import config
 from utils import *
@@ -28,6 +31,24 @@ class Alarm_Manager(Thread):
 			for id in self.notify_list:
 				out = out + "{}, ".format(get_pkmn_name(id))
 			log.info("You will be notified of the following pokemon: \n" + out[:-2])
+
+                        if 'zones' in settings:
+                            self.zones = []
+                            zones_settings = settings['zones']
+                            for zone in zones_settings:
+                                if 'coordinates' in zone:
+                                        points = []
+                                        for coordinate in zone['coordinates']:
+                                                p = Point(float(coordinate[0]), float(coordinate[1]), evaluate=False)
+                                                points.append(p)
+
+                                        self.zones.append(
+                                                {
+                                                        'name':zone['name'],
+                                                        'area':Geofence(zone['coordinates'])
+                                                }
+                                        )
+
 			self.seen = {}
 			self.alarms = []
 			self.queue = queue
@@ -125,7 +146,8 @@ class Alarm_Manager(Thread):
 			'time_left': timestamps[0],
 			'12h_time': timestamps[1],
 			'24h_time': timestamps[2],
-			'dir': get_dir(lat,lng)
+			'dir': get_dir(lat,lng),
+                        'zone': get_zone_name(lat,lng)
 		}
 		
 		for alarm in self.alarms:
@@ -147,3 +169,10 @@ class Alarm_Manager(Thread):
 				old.append(id)
 		for id in old:
 			del self.seen[id]
+
+        def get_zone_name(self, x, y):
+                if self.zones is None:
+                        return ""
+                for zone in self.zones:
+                        if zone['area'].contains(x,y):
+                                return zone['name']

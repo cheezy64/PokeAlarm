@@ -51,7 +51,10 @@ def set_config(root_path):
 		config['LOCATION'] =  get_pos_by_name(args.location)
 	
 	if args.geofence:
-		config['GEOFENCE'] = Geofence(os.path.join(root_path, args.geofence))
+                filepath = os.path.join(root_path, args.geofence)
+		with open(filepath) as file:
+			coordinates = csv.reader(file, delimiter=',')
+                        config['GEOFENCE'] = Geofence(coordinates)
 	
 	return config
 
