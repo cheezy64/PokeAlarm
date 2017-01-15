@@ -187,6 +187,11 @@ def get_team_name(team_number):
 def get_gmaps_link(lat, lng):
 	latLon = '{},{}'.format(repr(lat), repr(lng))
 	return 'http://maps.google.com/maps?q={}'.format(latLon)
+
+#Returns a String link to Apple Maps Directions at the location	
+def get_amaps_dir(lat, lng):
+	latLon = '{},{}'.format(repr(lat), repr(lng))
+	return 'http://maps.apple.com/?daddr={}'.format(latLon)
 	
 #Return a version of the string with the correct substitutions made	
 def replace(string, pkinfo):

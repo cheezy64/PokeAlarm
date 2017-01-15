@@ -221,6 +221,7 @@ class Alarm_Manager(Thread):
 			'lat' : "{}".format(repr(lat)),
 			'lng' : "{}".format(repr(lng)),
 			'gmaps': get_gmaps_link(lat, lng),
+			'amapsdir': get_amaps_dir(lat, lng),
 			'dist': get_dist_str(dist),
 			'time_left': timestamps[0],
 			'12h_time': timestamps[1],
