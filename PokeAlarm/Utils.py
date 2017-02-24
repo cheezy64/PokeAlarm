@@ -159,6 +159,11 @@ def get_gmaps_link(lat, lng):
     latlng = '{},{}'.format(repr(lat), repr(lng))
     return 'http://maps.google.com/maps?q={}'.format(latlng)
 
+# Returns a String link to Google Maps Pin at the location
+def get_gmaps_ios_link(lat, lng):
+    latlng = '{},{}'.format(repr(lat), repr(lng))
+    return 'comgooglemapsurl://maps.google.com/maps?q={}'.format(latlng)
+
 # Returns a static map url with <lat> and <lng> parameters for dynamic test
 def get_static_map_url(settings):  # TODO: optimize formatting
     if not parse_boolean(settings.get('enabled', 'True')):
@@ -255,5 +260,10 @@ def get_time_as_str(t, timezone=None):
     # Dissapear time in 24h format including seconds, eg "14:30:16"
     time_24 = disappear_time.strftime("%H:%M:%S")
     return time_left, time_12, time_24
+
+#Returns a String link to Apple Maps Directions at the location
+def get_amaps_dir(lat, lng):
+    latLon = '{},{}'.format(repr(lat), repr(lng))
+    return 'http://maps.apple.com/?daddr={}'.format(latLon)
 
 ########################################################################################################################

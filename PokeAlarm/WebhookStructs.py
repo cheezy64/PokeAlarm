@@ -5,7 +5,9 @@ import multiprocessing
 import traceback
 # 3rd Party Imports
 # Local Imports
+from Utils import get_amaps_link
 from Utils import get_gmaps_link
+from Utils import get_gmaps_ios_link
 
 log = logging.getLogger('Structures')
 
@@ -57,7 +59,9 @@ class RocketMap:
             'def': int(def_) if def_ is not None else 'unkn',
             'sta': int(sta) if sta is not None else 'unkn'
         }
+        pkmn['amaps'] = get_amaps_link(pkmn['lat'], pkmn['lng'])
         pkmn['gmaps'] = get_gmaps_link(pkmn['lat'], pkmn['lng'])
+        pkmn['gmapsios'] = get_gmaps_ios_link(pkmn['lat'], pkmn['lng'])
         if atk is None or def_ is None or sta is None:
             pkmn['iv'] = 'unkn'
         else:
@@ -78,7 +82,9 @@ class RocketMap:
             'lat': float(data['latitude']),
             'lng': float(data['longitude'])
         }
+        stop['amaps'] = get_amaps_link(stop['lat'], stop['lng'])
         stop['gmaps'] = get_gmaps_link(stop['lat'], stop['lng'])
+        stop['gmapsios'] = get_gmaps_ios_link(stop['lat'], stop['lng'])
         return stop
 
     @staticmethod
@@ -93,7 +99,9 @@ class RocketMap:
             'lat': float(data['latitude']),
             'lng': float(data['longitude'])
         }
+        gym['amaps'] = get_amaps_link(gym['lat'], gym['lng'])
         gym['gmaps'] = get_gmaps_link(gym['lat'], gym['lng'])
+        gym['gmapsios'] = get_gmaps_ios_link(gym['lat'], gym['lng'])
         return gym
 ########################################################################################################################
 
