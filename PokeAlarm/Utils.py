@@ -262,7 +262,7 @@ def get_time_as_str(t, timezone=None):
     return time_left, time_12, time_24
 
 #Returns a String link to Apple Maps Directions at the location
-def get_amaps_dir(lat, lng):
+def get_amaps_link(lat, lng):
     latLon = '{},{}'.format(repr(lat), repr(lng))
     return 'http://maps.apple.com/?daddr={}'.format(latLon)
 
